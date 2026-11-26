@@ -1,16 +1,47 @@
-# React + Vite
+# BrainTree Capital — Marketing Site
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Marketing site for BrainTree Capital (braintreecap.com): professionally managed global investment portfolios (UCITS ETFs) for Indian residents, NRIs and foreign investors.
 
-Currently, two official plugins are available:
+## Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- React 19 + Vite 8
+- Tailwind CSS 3
+- Framer Motion (scroll/reveal animations)
+- Three.js (interactive globe)
+- React Router 7
 
-## React Compiler
+## Run Locally
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```bash
+# 1. Install dependencies
+npm install
 
-## Expanding the Oxlint configuration
+# 2. Start the dev server (hot reload)
+npm run dev
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+# 3. Open the local URL shown in the terminal
+#    (usually http://localhost:5173)
+```
+
+## Build for Production
+
+```bash
+npm run build     # outputs to ./out
+npm run preview   # preview the production build locally
+```
+
+## Project Structure
+
+```
+src/
+  content/siteContent.js     # All copy, nav, data (single source of truth)
+  lib/animation.js           # Shared Framer Motion variants + viewport settings
+  lib/motion-helpers.jsx     # Reveal, StaggerContainer, CountUp components
+  components/
+    layout/                  # Navbar (scroll-spy), SiteFooter, AnnouncementBar
+    home/                    # Hero, sections, FinalCTA
+    portfolio/               # Phone mockup, PyramidLayersView
+    globe/                   # Three.js globe with gold routes from India
+    common/                  # Buttons, BrandLogo, SectionHeader
+  pages/                     # Home, Contact, AllWeather
+```
