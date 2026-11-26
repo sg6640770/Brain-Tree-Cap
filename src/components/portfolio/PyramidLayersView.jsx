@@ -1,5 +1,5 @@
 import { useEffect, useId, useLayoutEffect, useRef, useState } from 'react';
-import { pyramidLayers } from './pyramidData';
+import { pyramidLayers } from '../../content/siteContent';
 
 function useScrollTriggeredInView() {
   const ref = useRef(null);
@@ -102,23 +102,23 @@ function PyramidDirectionArrow({ label, direction, visible }) {
     ? `${label} increases towards Conviction`
     : 'Portfolio allocation increases towards Defensive and Income';
   const path = isUpward
-    ? 'M5 398V12 M1.5 18L5 12L8.5 18'
-    : 'M5 12V398 M1.5 392L5 398L8.5 392';
+    ? 'M5 398V14 M1 20L5 14L9 20'
+    : 'M5 14V398 M1 392L5 398L9 392';
 
   return (
-    <div className={`pyramid-direction-arrow flex min-w-0 items-stretch justify-center gap-0.5 ${visible ? 'is-visible' : ''}`}>
-      <span aria-hidden="true" className="self-center text-[10px] font-semibold tracking-[0.12em] text-[#526FAE] [writing-mode:vertical-rl] rotate-180">
+    <div className={`pyramid-direction-arrow flex min-w-0 items-stretch justify-center gap-1 ${visible ? 'is-visible' : ''}`}>
+      <span aria-hidden="true" className="self-center text-[13px] font-bold tracking-[0.14em] text-[#1B3A7A] [writing-mode:vertical-rl] rotate-180">
         {label}
       </span>
       <svg
         role="img"
         aria-label={description}
-        className="h-full w-[8px] shrink-0 overflow-visible text-[#6F8DF0]"
+        className="h-full w-[10px] shrink-0 overflow-visible text-[#1B3A7A]"
         viewBox="0 0 10 410"
         preserveAspectRatio="none"
         fill="none"
       >
-        <path d={path} stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+        <path d={path} stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
       </svg>
     </div>
   );
@@ -140,7 +140,13 @@ export default function PyramidLayersView() {
       <div role="group" aria-label="Potential return increases towards the top" className="grid grid-cols-1 items-stretch">
         <PyramidDirectionArrow label="RETURN" direction="up" visible={layersVisible} />
       </div>
-      <div ref={pyramidRef} className={`pyramid-assembly mx-auto ${layersVisible ? 'is-visible' : ''}`} style={{ height: pyramidHeight }}>
+      <div
+        ref={pyramidRef}
+        className={`pyramid-assembly mx-auto ${layersVisible ? 'is-visible' : ''}`}
+        onMouseEnter={(e) => e.currentTarget.classList.add('has-hover')}
+        onMouseLeave={(e) => e.currentTarget.classList.remove('has-hover')}
+        style={{ height: pyramidHeight }}
+      >
         {pyramidWidth > 0 && (
           <ol aria-label="The four layers of the pyramid, from boldest to safest" className="flex h-full flex-col" style={{ gap: config.gap }}>
             {pyramidLayers.map((layer, index) => {

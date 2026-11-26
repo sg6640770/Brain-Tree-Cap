@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import GlobeHero from '../globe/GlobeHero';
 import { PrimaryButton, SecondaryButton } from '../common/Buttons';
@@ -155,8 +155,8 @@ export default function Hero() {
                   <span key={note}>{note}</span>
                 ))}
                 <span className="text-[11px] leading-4 text-[#8A9AB8]">
-                  <span className="align-super">\u2020 See Disclosures.</span>{' '}
-                  <span className="align-super">\u2021 See Disclosures.</span>
+                  <span className="align-super">{'\u2020 See Disclosures.'}</span>{' '}
+                  <span className="align-super">{'\u2021 See Disclosures.'}</span>
                 </span>
               </motion.div>
             </div>

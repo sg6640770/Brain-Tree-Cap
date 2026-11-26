@@ -1,12 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
-import { BriefcaseBusiness, FileCheck, Globe, Landmark, UserRoundPlus } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { PrimaryButton } from '../common/Buttons';
 import SectionHeader from '../common/SectionHeader';
-
-const investorRouteCards = [
-  { title: 'NRIs', text: 'Invest directly from the country where you live.', icon: Globe },
-  { title: 'RSU holders', text: 'Sell RSUs in a planned manner and invest directly.', icon: BriefcaseBusiness },
-];
+import { journeySteps, investorRouteCards, journeyResidentStep, journeyFootnote } from '../../content/siteContent';
+import { viewportOnce, EASE_OUT, prefersReducedMotion } from '../../lib/animation';
 
 function JourneyConnector({ className, delay, active, reducedMotion }) {
   const renderConnector = (direction) => {
@@ -211,9 +208,9 @@ export default function HowItWorksJourney() {
     <section
       id="how-it-works"
       ref={sectionRef}
-      className={`journey-section bg-white px-4 py-[62px] sm:px-6 xl:py-[82px]${journeyActive ? ' journey-active' : ''}`}
+      className={`journey-section bg-white section-pad${journeyActive ? ' journey-active' : ''}`}
     >
-      <div className="mx-auto max-w-[1196px]">
+      <div className="site-container">
         <div className="journey-sequence" style={{ '--journey-delay': '0ms' }}>
           <SectionHeader label="How it works" title="Get started in 4 simple steps." />
         </div>
@@ -227,11 +224,11 @@ export default function HowItWorksJourney() {
         <div className="journey-flow mx-auto mt-10 max-w-[1196px] xl:mt-14">
           <div className="journey-stage-one">
             <JourneyStepCard
-              number="1"
-              title="Open an account"
-              text="Sign up online in a few minutes."
-              icon={UserRoundPlus}
-              delay={350}
+              number={journeySteps[0].number}
+              title={journeySteps[0].title}
+              text={journeySteps[0].text}
+              icon={journeySteps[0].icon}
+              delay={journeySteps[0].delay}
             />
           </div>
 
@@ -239,11 +236,11 @@ export default function HowItWorksJourney() {
 
           <div className="journey-stage-two">
             <JourneyStepCard
-              number="2"
-              title="Complete KYC"
-              text="Verify your identity digitally in about a day. No branch visits and no paperwork."
-              icon={FileCheck}
-              delay={930}
+              number={journeySteps[1].number}
+              title={journeySteps[1].title}
+              text={journeySteps[1].text}
+              icon={journeySteps[1].icon}
+              delay={journeySteps[1].delay}
             />
           </div>
 
@@ -287,11 +284,11 @@ export default function HowItWorksJourney() {
 
               <div className="journey-route-option journey-route-option-resident">
                 <JourneyStepCard
-                  number="4"
-                  title="Resident Indians"
-                  text="Invest through the RBI's LRS scheme."
-                  icon={Landmark}
-                  delay={2360}
+                  number={journeyResidentStep.number}
+                  title={journeyResidentStep.title}
+                  text={journeyResidentStep.text}
+                  icon={journeyResidentStep.icon}
+                  delay={journeyResidentStep.delay}
                   resident
                 />
               </div>
@@ -303,7 +300,7 @@ export default function HowItWorksJourney() {
           className="journey-sequence mt-8 text-center text-[14px] leading-5 text-[#475775] xl:mt-10"
           style={{ '--journey-delay': '2680ms' }}
         >
-          Minimum US $10,000, top-up from US $1,000. Partial / Full withdrawal anytime.
+          {journeyFootnote}
         </p>
         <div className="journey-sequence mt-8 text-center xl:mt-10" style={{ '--journey-delay': '2860ms' }}>
           <PrimaryButton size="steps" href="https://paasa.com/install-app?utm_source=BrainTreeCapital&utm_medium=Distribution&utm_campaign=referral-by-braintree-capital&utm_content=BRAINWM&utm_term=braintreecapital" target='blank'>Open account</PrimaryButton>
