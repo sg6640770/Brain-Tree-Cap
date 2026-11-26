@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import PyramidLayersView from '../portfolio/PyramidLayersView';
+import { CountUp } from '../../lib/motion-helpers';
 import { pyramidChips } from '../../content/siteContent';
 import { viewportOnce, EASE_OUT, prefersReducedMotion } from '../../lib/animation';
 
@@ -15,9 +16,35 @@ export default function PyramidSection() {
           viewport={viewportOnce}
           transition={{ duration: 0.6, ease: EASE_OUT }}
         >
-          <span className="inline-flex h-8 items-center rounded-full bg-gold-tint px-[14px] text-[13px] font-semibold text-gold-text">How we invest</span>
-          <h2 className="brand-serif mt-4 text-[36px] leading-[1.15] !tracking-normal text-navy md:text-[48px]">The Layered Pyramid Approach.</h2>
-          <p className="mx-auto mt-4 max-w-[680px] text-[18px] leading-[1.5] text-[#475775]">Four layers of ETFs, from the safest at the base to the boldest at the top.</p>
+          <motion.span
+            className="inline-flex h-8 items-center rounded-full bg-gold-tint px-[14px] text-[13px] font-semibold text-gold-text"
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={viewportOnce}
+            transition={{ duration: 0.45, ease: EASE_OUT }}
+          >
+            How we invest
+          </motion.span>
+          <span className="block overflow-hidden">
+            <motion.h2
+              className="brand-serif mt-4 text-[36px] leading-[1.15] !tracking-normal text-navy md:text-[48px]"
+              initial={{ y: '100%' }}
+              whileInView={{ y: 0 }}
+              viewport={viewportOnce}
+              transition={{ duration: 0.7, ease: EASE_OUT, delay: 0.08 }}
+            >
+              The Layered Pyramid Approach.
+            </motion.h2>
+          </span>
+          <motion.p
+            className="mx-auto mt-4 max-w-[680px] text-[18px] leading-[1.5] text-[#475775]"
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={viewportOnce}
+            transition={{ duration: 0.5, ease: EASE_OUT, delay: 0.2 }}
+          >
+            Four layers of ETFs, from the safest at the base to the boldest at the top.
+          </motion.p>
         </motion.div>
         <PyramidLayersView />
         <motion.div
@@ -33,26 +60,57 @@ export default function PyramidSection() {
           </p>
 
           <div className="mt-7 grid grid-cols-[minmax(0,1fr)_30px_minmax(0,1fr)] items-stretch md:mt-9 md:grid-cols-[minmax(0,1fr)_90px_minmax(0,1fr)]">
-            <div className="flex flex-col items-center justify-center rounded-[14px] border border-[#C9D4EE] bg-[#FFF9E6] px-3 py-5 text-center md:py-7">
-              <div className="brand-serif text-[28px] leading-none !tracking-normal text-navy md:text-[52px]">70–80%</div>
+            <motion.div
+              className="flex flex-col items-center justify-center rounded-[14px] border border-[#C9D4EE] bg-[#FFF9E6] px-3 py-5 text-center md:py-7"
+              initial={{ opacity: 0, x: -24 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={viewportOnce}
+              transition={{ duration: 0.6, ease: EASE_OUT }}
+            >
+              <div className="brand-serif text-[28px] leading-none !tracking-normal text-navy md:text-[52px]"><CountUp to={70} />–<CountUp to={80} />%</div>
               <div className="mt-3 text-[10px] font-semibold uppercase leading-[1.35] tracking-[0.18em] text-[#475775] md:text-[11.5px]">
                 Preservation core
               </div>
-            </div>
+            </motion.div>
 
-            <div aria-hidden="true" className="relative flex items-center justify-center">
-              <div className="h-[6px] w-full bg-[#A9B6CF]" />
-              <div className="absolute flex h-[26px] w-[26px] items-center justify-center rounded-full border-[4px] border-[#A9B6CF] bg-[#FBF1D0] md:h-[44px] md:w-[44px] md:border-[5px]">
+            <motion.div
+              aria-hidden="true"
+              className="relative flex items-center justify-center"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={viewportOnce}
+              transition={{ duration: 0.4, ease: EASE_OUT, delay: reduced ? 0 : 0.4 }}
+            >
+              <motion.div
+                className="h-[6px] w-full bg-[#A9B6CF]"
+                initial={{ scaleX: 0 }}
+                whileInView={{ scaleX: 1 }}
+                viewport={viewportOnce}
+                transition={{ duration: 0.6, ease: EASE_OUT, delay: reduced ? 0 : 0.5 }}
+              />
+              <motion.div
+                className="absolute flex h-[26px] w-[26px] items-center justify-center rounded-full border-[4px] border-[#A9B6CF] bg-[#FBF1D0] md:h-[44px] md:w-[44px] md:border-[5px]"
+                initial={{ scale: 1 }}
+                whileInView={{ scale: [1, 1.25, 1] }}
+                viewport={viewportOnce}
+                transition={{ duration: 0.6, ease: EASE_OUT, delay: reduced ? 0 : 1.1, times: [0, 0.5, 1] }}
+              >
                 <span className="h-[8px] w-[8px] rounded-full bg-[#7C8BA6] md:h-[14px] md:w-[14px]" />
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
 
-            <div className="flex flex-col items-center justify-center rounded-[14px] border border-[#E6D08C] bg-[#FBF1D0] px-3 py-5 text-center md:py-7">
-              <div className="brand-serif text-[28px] leading-none !tracking-normal text-[#9A6B12] md:text-[52px]">20–30%</div>
+            <motion.div
+              className="flex flex-col items-center justify-center rounded-[14px] border border-[#E6D08C] bg-[#FBF1D0] px-3 py-5 text-center md:py-7"
+              initial={{ opacity: 0, x: 24 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={viewportOnce}
+              transition={{ duration: 0.6, ease: EASE_OUT }}
+            >
+              <div className="brand-serif text-[28px] leading-none !tracking-normal text-[#9A6B12] md:text-[52px]"><CountUp to={20} />–<CountUp to={30} />%</div>
               <div className="mt-3 text-[10px] font-semibold uppercase leading-[1.35] tracking-[0.18em] text-[#475775] md:text-[11.5px]">
                 Growth sleeve
               </div>
-            </div>
+            </motion.div>
           </div>
         </motion.div>
         <div className="mt-10 flex flex-wrap justify-center gap-3">

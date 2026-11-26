@@ -1,9 +1,31 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { portfolioSeries, phoneHoldings } from '../../content/siteContent';
 import useInView from '../../hooks/useInView';
-import { prefersReducedMotion } from '../../lib/animation';
+import { viewportOnce, EASE_OUT, prefersReducedMotion } from '../../lib/animation';
+
+function PhoneTilt({ children }) {
+  const ref = useRef(null);
+  const reduced = prefersReducedMotion();
+  const finePointer = typeof window !== 'undefined' && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
+  const rotateX = useTransform(scrollYProgress, [0, 0.5, 1], [4, 0, -4]);
+  const rotateY = useTransform(scrollYProgress, [0, 0.5, 1], [-4, 0, 4]);
+  const tilt = finePointer && !reduced ? { rotateX, rotateY } : {};
+  return (
+    <motion.div
+      ref={ref}
+      style={{ perspective: 1000, ...tilt }}
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={viewportOnce}
+      transition={{ duration: 0.6, ease: EASE_OUT }}
+    >
+      {children}
+    </motion.div>
+  );
+}
 
 function stepChartPath(values) {
   const points = values.map((y, index) => [(index * 240) / (values.length - 1), y]);
@@ -42,10 +64,11 @@ function PortfolioPhone({ animateImmediately = false }) {
   }, [inView, reduceMotion]);
 
   return (
-    <div
-      ref={viewRef}
-      className={`showcase-phone phone-float relative z-10 border border-[#1A2340] bg-white shadow-[0_22px_42px_rgba(10,27,61,0.2)] ${inView ? 'is-visible' : ''}`}
-    >
+    <PhoneTilt>
+      <div
+        ref={viewRef}
+        className={`showcase-phone phone-float relative z-10 border border-[#1A2340] bg-white shadow-[0_22px_42px_rgba(10,27,61,0.2)] ${inView ? 'is-visible' : ''}`}
+      >
       <div className="phone-screen relative h-full rounded-[12%] bg-white px-[7.333cqw] pb-[6cqw] pt-[5.333cqw]">
         <div aria-hidden="true" className="absolute left-1/2 top-[4cqw] h-[8cqw] w-[28.667cqw] -translate-x-1/2 rounded-full bg-[#0A1B3D]" />
         <div className="flex h-[6cqw] items-center justify-between text-[4cqw] font-semibold leading-none text-navy">
@@ -124,9 +147,16 @@ function PortfolioPhone({ animateImmediately = false }) {
           <div className="text-[4cqw] font-semibold text-navy">Next rebalance</div>
           <div className="mt-[1.5cqw] flex items-center justify-between">
             {rebalanceTimeline.map((step, i) => (
-              <div key={step.label} className="flex flex-1 items-center">
+              <motion.div
+                key={step.label}
+                className="flex flex-1 items-center"
+                initial={{ opacity: 0.25 }}
+                whileInView={{ opacity: 1 }}
+                viewport={viewportOnce}
+                transition={{ duration: 0.35, ease: EASE_OUT, delay: reduceMotion ? 0 : 0.2 + i * 0.15 }}
+              >
                 <div className="flex flex-col items-center gap-[1cqw]">
-                  <span
+                  <motion.span
                     className={`flex h-[5.5cqw] w-[5.5cqw] items-center justify-center rounded-full text-[3.2cqw] font-bold ${
                       step.done
                         ? 'bg-blue text-white'
@@ -134,20 +164,25 @@ function PortfolioPhone({ animateImmediately = false }) {
                           ? 'bg-gold-tint text-gold-text ring-2 ring-[#D9A020]'
                           : 'bg-[#EAF0FF] text-[#9BA9C6]'
                     }`}
+                    initial={step.active ? { scale: 1 } : false}
+                    whileInView={step.active ? { scale: [1, 1.18, 1] } : false}
+                    viewport={viewportOnce}
+                    transition={{ duration: 0.5, ease: EASE_OUT, delay: reduceMotion ? 0 : 0.2 + i * 0.15 + 0.15, times: [0, 0.5, 1] }}
                   >
                     {i + 1}
-                  </span>
+                  </motion.span>
                   <span className="text-[3.2cqw] leading-3 text-[#475775]">{step.label}</span>
                 </div>
                 {i < rebalanceTimeline.length - 1 && (
                   <span className="mx-[1cqw] h-[1px] flex-1 bg-[#DCE5F1]" />
                 )}
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
       </div>
     </div>
+    </PhoneTilt>
   );
 }
 
@@ -165,27 +200,47 @@ export default function PortfolioShowcase({ variant = 'home' }) {
         <div className="relative z-10 grid w-full items-center gap-8 xl:grid-cols-[460px_minmax(0,1fr)] xl:gap-[clamp(24px,6.94vw,100px)]">
           <div className="xl:max-w-[460px]">
             {isSubpage ? (
-              <div className="flex items-center gap-2 text-[14px] font-medium text-blue">
+              <motion.div
+                className="flex items-center gap-2 text-[14px] font-medium text-blue"
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={viewportOnce}
+                transition={{ duration: 0.5, ease: EASE_OUT }}
+              >
                 <Link to="/#portfolios" className="hover:text-navy">Portfolios</Link>
                 <span aria-hidden="true">/</span>
                 <span>All Weather Portfolio</span>
-              </div>
+              </motion.div>
             ) : (
-              <div className="text-[14px] font-medium text-blue">Your portfolio</div>
+              <motion.div
+                className="text-[14px] font-medium text-blue"
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={viewportOnce}
+                transition={{ duration: 0.5, ease: EASE_OUT }}
+              >
+                Your portfolio
+              </motion.div>
             )}
             {isSubpage ? (
               <h1 className="brand-serif mt-4 text-[36px] leading-[1.25] tracking-normal text-navy sm:text-[48px]">All Weather<br />Portfolio</h1>
             ) : (
               <h2 className="brand-serif mt-4 text-[36px] leading-[1.2] !tracking-normal text-navy md:text-[48px] xl:w-max">
-                <span className="block whitespace-nowrap">Explore Our</span>
-                <span className="block min-[380px]:whitespace-nowrap">Curated Portfolios.</span>
+                <span className="block overflow-hidden"><motion.span className="block whitespace-nowrap" initial={{ y: '100%' }} whileInView={{ y: 0 }} viewport={viewportOnce} transition={{ duration: 0.7, ease: EASE_OUT }}>Explore Our</motion.span></span>
+                <span className="block overflow-hidden"><motion.span className="block min-[380px]:whitespace-nowrap" initial={{ y: '100%' }} whileInView={{ y: 0 }} viewport={viewportOnce} transition={{ duration: 0.7, ease: EASE_OUT, delay: 0.08 }}>Curated Portfolios.</motion.span></span>
               </h2>
             )}
-            <p className="mt-5 max-w-[460px] text-[18px] leading-[1.6] text-[#475775]">
+            <motion.p
+              className="mt-5 max-w-[460px] text-[18px] leading-[1.6] text-[#475775]"
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={viewportOnce}
+              transition={{ duration: 0.5, ease: EASE_OUT, delay: 0.2 }}
+            >
               {isSubpage
                 ? 'A global ETF portfolio built on the Layered Pyramid, balanced to hold up in every market season. ETFs only, rebalanced every quarter, from US $10,000.'
                 : 'Watch your portfolio grow, see how each of the four layers is doing, and know when we rebalance.'}
-            </p>
+            </motion.p>
           </div>
           <div className="flex justify-center xl:justify-end">
             <div

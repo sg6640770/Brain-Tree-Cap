@@ -34,15 +34,22 @@ export default function WhatGoesWrongSection() {
             {whatGoesWrong.map((statement, index) => (
               <motion.div
                 key={statement}
-                initial={{ opacity: 0, y: 12, scale: 0.97 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                initial={{ opacity: 0, x: -16 }}
+                whileInView={{ opacity: 1, x: 0 }}
                 viewport={viewportOnce}
-                transition={{ duration: 0.45, ease: EASE_OUT, delay: reduced ? 0 : 0.3 + index * 0.12 }}
+                transition={{ duration: 0.45, ease: EASE_OUT, delay: reduced ? 0 : 0.3 + index * 0.1 }}
                 className="flex items-start gap-3 sm:gap-4"
               >
-                <span aria-hidden="true" className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#2A3F73] text-gold-light">
+                <motion.span
+                  aria-hidden="true"
+                  className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#2A3F73] text-gold-light"
+                  initial={{ scale: 0.6, rotate: -30 }}
+                  whileInView={{ scale: 1, rotate: 0 }}
+                  viewport={viewportOnce}
+                  transition={{ duration: 0.4, ease: EASE_OUT, delay: reduced ? 0 : 0.3 + index * 0.1 }}
+                >
                   <X size={15} strokeWidth={2.2} />
-                </span>
+                </motion.span>
                 <span>{statement}</span>
               </motion.div>
             ))}

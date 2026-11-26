@@ -102,7 +102,17 @@ export function CountUp({ to, duration = 1.2, decimals = 0, prefix = '', suffix 
   return <span ref={ref}>{prefix}{formatted}{suffix}</span>;
 }
 
-export function SpotlightCard({ children, className = '', as = 'div' }) {
+export function SpotlightCard({
+  children,
+  className = '',
+  as = 'div',
+  initial,
+  whileInView,
+  viewport,
+  transition,
+  whileHover,
+  ...rest
+}) {
   const ref = useRef(null);
   const handleMove = (e) => {
     const el = ref.current;
@@ -113,7 +123,7 @@ export function SpotlightCard({ children, className = '', as = 'div' }) {
   };
   if (!motion[as]) {
     const Tag = as;
-    return <Tag className={className}>{children}</Tag>;
+    return <Tag className={`spotlight-card ${className}`} {...rest}>{children}</Tag>;
   }
   const MotionTag = motion[as];
   return (
@@ -121,6 +131,32 @@ export function SpotlightCard({ children, className = '', as = 'div' }) {
       ref={ref}
       onMouseMove={handleMove}
       className={`spotlight-card ${className}`}
+      initial={initial}
+      whileInView={whileInView}
+      viewport={viewport}
+      transition={transition}
+      whileHover={whileHover}
+      {...rest}
+    >
+      {children}
+    </MotionTag>
+  );
+}
+
+export function IconPop({ children, className = '', as = 'span', ...rest }) {
+  if (prefersReducedMotion() || !motion[as]) {
+    const Tag = as;
+    return <Tag className={className} {...rest}>{children}</Tag>;
+  }
+  const MotionTag = motion[as];
+  return (
+    <MotionTag
+      className={className}
+      initial={{ scale: 0.6, rotate: -8 }}
+      whileInView={{ scale: 1, rotate: 0 }}
+      viewport={viewportOnce}
+      transition={{ type: 'spring', stiffness: 260, damping: 18 }}
+      {...rest}
     >
       {children}
     </MotionTag>
