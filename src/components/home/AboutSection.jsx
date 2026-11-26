@@ -71,7 +71,7 @@ function TeamMemberCard({ member, index, horizontal = false }) {
 export default function AboutSection() {
   const reduced = prefersReducedMotion();
   return (
-    <section id="about" data-reveal className="bg-mist section-pad">
+    <section id="about" className="bg-mist section-pad">
       <div className="site-container">
         <motion.header
           className="max-w-[740px]"

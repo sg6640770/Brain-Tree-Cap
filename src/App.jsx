@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
+import { MotionConfig } from 'framer-motion';
 import SiteLayout from './components/layout/SiteLayout';
 import AllWeatherPage from './pages/AllWeather';
 import ContactPage from './pages/Contact';
@@ -48,15 +49,17 @@ function RouteMetadata() {
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <RouteMetadata />
-      <Routes>
-        <Route element={<SiteLayout />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/portfolios/all-weather" element={<AllWeatherPage />} />
-          <Route path="/contact" element={<ContactPage />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <MotionConfig reducedMotion="user">
+      <BrowserRouter>
+        <RouteMetadata />
+        <Routes>
+          <Route element={<SiteLayout />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/portfolios/all-weather" element={<AllWeatherPage />} />
+            <Route path="/contact" element={<ContactPage />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </MotionConfig>
   );
 }

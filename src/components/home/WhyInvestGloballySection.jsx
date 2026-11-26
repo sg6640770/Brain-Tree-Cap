@@ -5,7 +5,7 @@ import { viewportOnce, EASE_OUT, prefersReducedMotion } from '../../lib/animatio
 export default function WhyInvestGloballySection() {
   const reduced = prefersReducedMotion();
   return (
-    <section id="why-us" data-reveal className="bg-mist section-pad lg:pt-9 lg:pb-[88px]">
+    <section id="why-us" className="bg-mist section-pad lg:pt-9 lg:pb-[88px]">
       <div className="site-container">
         <motion.div
           className="text-center"

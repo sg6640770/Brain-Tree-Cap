@@ -8,7 +8,7 @@ import { viewportOnce, EASE_OUT, prefersReducedMotion } from '../../lib/animatio
 export default function FinalCTA() {
   const reduced = prefersReducedMotion();
   return (
-    <section data-reveal className="bg-white section-pad">
+    <section className="bg-white section-pad">
       <div className="site-container">
         <motion.div
           className="cta-panel cta-dots mx-auto flex min-h-[358px] max-w-[920px] flex-col items-center justify-center rounded-[40px] px-6 py-[70px] text-center text-white sm:px-10"

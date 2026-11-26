@@ -7,7 +7,7 @@ import { viewportOnce, EASE_OUT, prefersReducedMotion } from '../../lib/animatio
 export default function GlobalPortfoliosSection() {
   const reduced = prefersReducedMotion();
   return (
-    <section id="global-portfolios" data-reveal className="bg-mist section-pad lg:pt-[92px]">
+    <section id="global-portfolios" className="bg-mist section-pad lg:pt-[92px]">
       <div className="site-container">
         <motion.div
           className="mx-auto flex flex-col items-center text-center"

@@ -6,7 +6,7 @@ import { viewportOnce, EASE_OUT, prefersReducedMotion } from '../../lib/animatio
 export default function AudienceSection() {
   const reduced = prefersReducedMotion();
   return (
-    <section data-reveal className="bg-mist section-pad xl:py-[82px]">
+    <section className="bg-mist section-pad xl:py-[82px]">
       <div className="site-container">
         <SectionHeader label="Who it is for" title="Who is BrainTree for?" />
         <div className="mx-auto mt-10 grid auto-rows-fr max-w-[1280px] items-stretch gap-6 md:grid-cols-2 xl:mt-14 xl:grid-cols-4">

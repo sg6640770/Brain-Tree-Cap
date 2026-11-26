@@ -6,7 +6,7 @@ import { viewportOnce, EASE_OUT, prefersReducedMotion } from '../../lib/animatio
 export default function WhatGoesWrongSection() {
   const reduced = prefersReducedMotion();
   return (
-    <section data-reveal className="bg-mist section-pad">
+    <section className="bg-mist section-pad">
       <div className="site-container">
         <motion.div
           className="text-center"
