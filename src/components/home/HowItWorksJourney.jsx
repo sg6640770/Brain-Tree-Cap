@@ -1,9 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
-import { motion } from 'framer-motion';
 import { PrimaryButton } from '../common/Buttons';
 import SectionHeader from '../common/SectionHeader';
+import { APP_INSTALL_URL } from '../../constants/siteLinks';
 import { journeySteps, investorRouteCards, journeyResidentStep, journeyFootnote } from '../../content/siteContent';
-import { viewportOnce, EASE_OUT, prefersReducedMotion } from '../../lib/animation';
 
 function JourneyConnector({ className, delay, active, reducedMotion }) {
   const renderConnector = (direction) => {
@@ -303,7 +302,7 @@ export default function HowItWorksJourney() {
           {journeyFootnote}
         </p>
         <div className="journey-sequence mt-8 text-center xl:mt-10" style={{ '--journey-delay': '2860ms' }}>
-          <PrimaryButton size="steps" href="https://paasa.com/install-app?utm_source=BrainTreeCapital&utm_medium=Distribution&utm_campaign=referral-by-braintree-capital&utm_content=BRAINWM&utm_term=braintreecapital" target='blank'>Open account</PrimaryButton>
+          <PrimaryButton size="steps" href={APP_INSTALL_URL} target="_blank" rel="noopener noreferrer">Open account</PrimaryButton>
         </div>
       </div>
     </section>
