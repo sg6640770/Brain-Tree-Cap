@@ -26,7 +26,6 @@ function PortfolioPhone({ animateImmediately = false }) {
   const [viewRef, inView] = useInView(animateImmediately);
   const reduceMotion = prefersReducedMotion();
   const [value, setValue] = useState(() => (reduceMotion ? 24860.5 : 0));
-  const [chartKey, setChartKey] = useState(0);
   const chart = stepChartPath(portfolioSeries[activeRange]);
 
   useEffect(() => {
@@ -41,10 +40,6 @@ function PortfolioPhone({ animateImmediately = false }) {
     frame = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(frame);
   }, [inView, reduceMotion]);
-
-  useEffect(() => {
-    setChartKey((k) => k + 1);
-  }, [activeRange]);
 
   return (
     <div
@@ -71,7 +66,7 @@ function PortfolioPhone({ animateImmediately = false }) {
           Quarterly rebalance ready
         </div>
         <svg
-          key={chartKey}
+          key={activeRange}
           className="mt-[4cqw] h-[26cqw] w-full overflow-visible"
           viewBox="0 0 240 90"
           role="img"

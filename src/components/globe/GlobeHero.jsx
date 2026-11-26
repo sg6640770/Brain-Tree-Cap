@@ -125,7 +125,7 @@ export default function GlobeHero({ className = '', scrollTarget }) {
     let renderer;
     try {
       renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
-    } catch (e) {
+    } catch {
       setStill(true);
       return undefined;
     }
